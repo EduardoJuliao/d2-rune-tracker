@@ -150,6 +150,33 @@ h2 {
   border-radius: 8px;
 }
 
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.log-header h2 {
+  margin-bottom: 0;
+}
+
+.export-btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  background-color: #d4af37;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.export-btn:hover {
+  background-color: #f0c850;
+}
+
 .log-container {
   max-height: 300px;
   overflow-y: auto;
