@@ -106,7 +106,7 @@ export class LowerKurastTrackerComponent implements OnInit {
   }
 
   exportLog(): void {
-    let exportText = 'Diablo II - Lower Kurast Run Log\n';
+    let exportText = 'Diablo II - Rune Run Log\n';
     exportText += '================================\n\n';
 
     if (this.logEntries.length === 0) {
