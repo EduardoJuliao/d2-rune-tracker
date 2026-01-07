@@ -27,8 +27,9 @@ export class ExportButtonComponent {
     }
 
     exportText += '\n================================\n';
-    exportText += `Total Runes Found in ${this.runCount} runs:\n`;
-    this.runes.forEach(rune => {
+    const totalRuneCount = this.runes.reduce((sum, rune) => sum + rune.count, 0);
+    exportText += `Found ${totalRuneCount} Runes in ${this.runCount} runs:\n`;
+    this.runes.sort(x => x.level).forEach(rune => {
       if (rune.count > 0) {
         exportText += `${rune.name}: ${rune.count}\n`;
       }
