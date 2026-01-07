@@ -1,0 +1,18 @@
+<div class="log-section">
+  <div class="log-header">
+    <h2>Run Log</h2>
+    <app-export-button
+      [logEntries]="logEntries"
+      [runes]="runes"
+      [runCount]="runCount">
+    </app-export-button>
+  </div>
+  <div class="log-container">
+    <div class="log-entry" *ngFor="let entry of logEntries">
+      Found {{ entry.count }} {{ entry.runeName }} rune{{ entry.count > 1 ? 's' : '' }} in run {{ entry.runNumber }}
+    </div>
+    <div *ngIf="logEntries.length === 0" class="no-entries">
+      No runes found yet. Start tracking your runs!
+    </div>
+  </div>
+</div>

@@ -4,12 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LowerKurastTrackerComponent } from './lower-kurast-tracker/lower-kurast-tracker.component';
+import { RuneTrackerComponent } from './rune-tracker/rune-tracker.component';
+import { RuneCardComponent } from './rune-tracker/rune-card/rune-card.component';
+import { ExportButtonComponent } from './rune-tracker/export-button/export-button.component';
+import { RunLogComponent } from './rune-tracker/run-log/run-log.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LowerKurastTrackerComponent
+    RuneTrackerComponent,
+    RuneCardComponent,
+    ExportButtonComponent,
+    RunLogComponent
   ],
   imports: [
     BrowserModule,

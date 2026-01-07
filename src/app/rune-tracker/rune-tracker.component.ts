@@ -1,25 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
-interface Rune {
-  name: string;
-  level: number;
-  count: number;
-  image: string;
-}
-
-interface LogEntry {
-  runNumber: number;
-  runeName: string;
-  count: number;
-  timestamp: Date;
-}
+import { Rune, LogEntry } from '../models/rune.model';
 
 @Component({
-  selector: 'app-lower-kurast-tracker',
-  templateUrl: './lower-kurast-tracker.component.html',
-  styleUrls: ['./lower-kurast-tracker.component.css']
+  selector: 'app-rune-tracker',
+  templateUrl: './rune-tracker.component.html',
+  styleUrls: ['./rune-tracker.component.css']
 })
-export class LowerKurastTrackerComponent implements OnInit {
+export class RuneTrackerComponent implements OnInit {
   runNumber: number = 1;
   runes: Rune[] = [];
   logEntries: LogEntry[] = [];
@@ -103,35 +90,5 @@ export class LowerKurastTrackerComponent implements OnInit {
   incrementRunNumber(): void {
     this.finalizeCurrentRun();
     this.runNumber++;
-  }
-
-  exportLog(): void {
-    let exportText = 'Diablo II - Rune Run Log\n';
-    exportText += '================================\n\n';
-
-    if (this.logEntries.length === 0) {
-      exportText += 'No runs logged yet.\n';
-    } else {
-      const sortedEntries = [...this.logEntries].reverse();
-      sortedEntries.forEach(entry => {
-        exportText += `Found ${entry.count} ${entry.runeName} rune${entry.count > 1 ? 's' : ''} in run ${entry.runNumber}\n`;
-      });
-    }
-
-    exportText += '\n================================\n';
-    exportText += 'Total Runes Found:\n';
-    this.runes.forEach(rune => {
-      if (rune.count > 0) {
-        exportText += `${rune.name}: ${rune.count}\n`;
-      }
-    });
-
-    const blob = new Blob([exportText], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `lk-runs-${new Date().toISOString().split('T')[0]}.txt`;
-    link.click();
-    window.URL.revokeObjectURL(url);
   }
 }

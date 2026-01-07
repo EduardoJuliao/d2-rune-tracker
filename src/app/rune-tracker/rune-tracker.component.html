@@ -1,0 +1,32 @@
+<div class="tracker-container">
+  <h1>D2 Rune Tracker</h1>
+
+  <div class="run-number-section">
+    <label for="runNumber">Run Number:</label>
+    <input
+      type="number"
+      id="runNumber"
+      [(ngModel)]="runNumber"
+      (change)="onRunNumberChange($event)"
+      min="1"
+      class="run-input">
+    <button (click)="incrementRunNumber()" class="increment-btn">Next Run</button>
+  </div>
+
+  <div class="runes-section">
+    <div class="rune-row" *ngFor="let row of runeRows">
+      <app-rune-card
+        *ngFor="let rune of row"
+        [rune]="rune"
+        (increment)="incrementRune($event)"
+        (decrement)="decrementRune($event)">
+      </app-rune-card>
+    </div>
+  </div>
+
+  <app-run-log
+    [logEntries]="logEntries"
+    [runes]="runes"
+    [runCount]="runNumber - 1">
+  </app-run-log>
+</div>

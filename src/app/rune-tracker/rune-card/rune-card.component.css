@@ -1,0 +1,71 @@
+.rune-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+  min-width: 120px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rune-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+.rune-image {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.rune-info {
+  text-align: center;
+  width: 100%;
+}
+
+.rune-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+.rune-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.counter-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #d4af37;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.counter-btn:hover {
+  background-color: #f0c850;
+}
+
+.counter-btn:active {
+  transform: scale(0.95);
+}
+
+.count {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  min-width: 30px;
+  text-align: center;
+}

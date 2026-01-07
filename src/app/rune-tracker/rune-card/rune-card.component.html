@@ -1,0 +1,11 @@
+<div class="rune-card">
+  <img [src]="rune.image" [alt]="rune.name" class="rune-image">
+  <div class="rune-info">
+    <div class="rune-name">{{ rune.name }}</div>
+    <div class="rune-counter">
+      <button (click)="onDecrement()" class="counter-btn">-</button>
+      <span class="count">{{ rune.count }}</span>
+      <button (click)="onIncrement()" class="counter-btn">+</button>
+    </div>
+  </div>
+</div>
