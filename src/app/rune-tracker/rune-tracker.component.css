@@ -61,24 +61,47 @@ h2 {
 }
 
 .storage-toggle {
-  margin-top: 15px;
-  display: inline-block;
+  margin-top: 20px;
+  display: block;
+  padding: 12px 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #d4af37;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.storage-toggle:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  transform: translateY(-1px);
 }
 
 .storage-toggle label {
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
   color: #d4af37;
   user-select: none;
+  margin: 0;
+  gap: 10px;
 }
 
 .storage-toggle input[type="checkbox"] {
-  margin-right: 8px;
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  accent-color: #d4af37;
+  position: relative;
+}
+
+.storage-toggle input[type="checkbox"]:checked {
+  filter: brightness(1.2);
 }
 
 .runes-section {
