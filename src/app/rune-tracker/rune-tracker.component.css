@@ -60,6 +60,27 @@ h2 {
   background-color: #f0c850;
 }
 
+.storage-toggle {
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.storage-toggle label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #d4af37;
+  user-select: none;
+}
+
+.storage-toggle input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
 .runes-section {
   margin-bottom: 30px;
 }

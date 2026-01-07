@@ -8,6 +8,7 @@ import { RuneTrackerComponent } from './rune-tracker/rune-tracker.component';
 import { RuneCardComponent } from './rune-tracker/rune-card/rune-card.component';
 import { ExportButtonComponent } from './rune-tracker/export-button/export-button.component';
 import { RunLogComponent } from './rune-tracker/run-log/run-log.component';
+import { LocalStorageService } from './services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { RunLogComponent } from './rune-tracker/run-log/run-log.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

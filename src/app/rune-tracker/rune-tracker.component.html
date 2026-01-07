@@ -11,6 +11,17 @@
       min="1"
       class="run-input">
     <button (click)="incrementRunNumber()" class="increment-btn">Next Run</button>
+
+    <div class="storage-toggle">
+      <label for="storageEnabled">
+        <input
+          type="checkbox"
+          id="storageEnabled"
+          [(ngModel)]="storageEnabled"
+          (change)="onStorageToggle(storageEnabled)">
+        Save Progress
+      </label>
+    </div>
   </div>
 
   <div class="runes-section">

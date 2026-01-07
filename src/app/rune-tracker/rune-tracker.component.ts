@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Rune, LogEntry } from '../models/rune.model';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-rune-tracker',
@@ -11,13 +12,26 @@ export class RuneTrackerComponent implements OnInit {
   runes: Rune[] = [];
   logEntries: LogEntry[] = [];
   currentRunRunes: Map<string, number> = new Map();
+  storageEnabled: boolean = false;
 
   runeRows: Rune[][] = [];
 
-  constructor() { }
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.initializeRunes();
+
+    this.storageEnabled = this.localStorageService.getStorageEnabled();
+
+    if (this.storageEnabled) {
+      const savedState = this.localStorageService.loadTrackerState();
+      if (savedState) {
+        this.runNumber = savedState.runNumber;
+        this.runes = savedState.runes;
+        this.logEntries = savedState.logEntries;
+      }
+    }
+
     this.organizeRunesIntoRows();
   }
 
@@ -75,6 +89,7 @@ export class RuneTrackerComponent implements OnInit {
       }
     });
     this.currentRunRunes.clear();
+    this.saveToLocalStorage();
   }
 
   onRunNumberChange(event: any): void {
@@ -82,6 +97,7 @@ export class RuneTrackerComponent implements OnInit {
     if (newValue >= 1 && newValue !== this.runNumber) {
       this.finalizeCurrentRun();
       this.runNumber = newValue;
+      this.saveToLocalStorage();
     } else if (newValue < 1) {
       event.target.value = this.runNumber;
     }
@@ -90,5 +106,27 @@ export class RuneTrackerComponent implements OnInit {
   incrementRunNumber(): void {
     this.finalizeCurrentRun();
     this.runNumber++;
+    this.saveToLocalStorage();
+  }
+
+  onStorageToggle(enabled: boolean): void {
+    this.storageEnabled = enabled;
+    this.localStorageService.setStorageEnabled(enabled);
+
+    if (enabled) {
+      this.saveToLocalStorage();
+    } else {
+      this.localStorageService.clearTrackerState();
+    }
+  }
+
+  private saveToLocalStorage(): void {
+    if (this.storageEnabled) {
+      this.localStorageService.saveTrackerState(
+        this.runNumber,
+        this.runes,
+        this.logEntries
+      );
+    }
   }
 }
