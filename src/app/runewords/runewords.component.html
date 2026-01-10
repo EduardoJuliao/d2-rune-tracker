@@ -1,0 +1,89 @@
+<div class="runewords-container">
+  <h1>D2R Runewords</h1>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <h3>Sockets</h3>
+      <div class="socket-filters">
+        <button
+          *ngFor="let socket of socketOptions"
+          (click)="onSocketFilterChange(socket)"
+          [class.active]="selectedSockets === socket"
+          class="filter-btn">
+          {{ socket }}
+        </button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3>Runes</h3>
+      <div class="rune-filters">
+        <label *ngFor="let rune of availableRunes" class="rune-checkbox">
+          <input
+            type="checkbox"
+            [checked]="selectedRunes.has(rune)"
+            (change)="onRuneFilterChange(rune, $any($event.target).checked)">
+          <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-icon">
+          <span>{{ rune }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3>Item Types</h3>
+      <div class="itemtype-filters">
+        <label *ngFor="let itemType of availableItemTypes" class="itemtype-checkbox">
+          <input
+            type="checkbox"
+            [checked]="selectedItemTypes.has(itemType)"
+            (change)="onItemTypeFilterChange(itemType, $any($event.target).checked)">
+          <span>{{ itemType }}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button (click)="clearFilters()" class="clear-btn">Clear All Filters</button>
+      <span class="results-count">{{ filteredRunewords.length }} runewords found</span>
+    </div>
+  </div>
+
+  <!-- Runewords Grid -->
+  <div class="runewords-grid">
+    <article *ngFor="let runeword of filteredRunewords" class="runeword-card">
+      <h3 class="runeword-title">{{ runeword.name }}</h3>
+
+      <h4 class="runeword-meta">
+        <span class="patch-label">Patch 2.6</span>
+        <span class="runeword-label">Runeword</span>
+      </h4>
+
+      <!-- Runes Section -->
+      <div class="runes-list">
+        <span *ngFor="let rune of runeword.runes; let i = index" class="rune-item">
+          <i *ngIf="i > 0" class="arrow">▶</i>
+          <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-image">
+          <span class="rune-name">{{ rune }}</span>
+        </span>
+      </div>
+
+      <div class="runeword-requirements">
+        <span class="level-req">Req level: {{ runeword.level }}</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="runeword-info">
+        <span class="sockets-info">{{ runeword.sockets }} socket</span>
+        <span class="item-types">{{ runeword.itemTypes.join(', ') }}</span>
+      </div>
+
+      <div class="runeword-properties">
+        <div *ngFor="let property of runeword.properties" class="property">
+          {{ property }}
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

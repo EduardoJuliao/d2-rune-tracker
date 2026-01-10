@@ -9,6 +9,8 @@ import { RuneCardComponent } from './rune-tracker/rune-card/rune-card.component'
 import { ExportButtonComponent } from './rune-tracker/export-button/export-button.component';
 import { RunLogComponent } from './rune-tracker/run-log/run-log.component';
 import { LocalStorageService } from './services/local-storage.service';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RunewordsComponent } from './runewords/runewords.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LocalStorageService } from './services/local-storage.service';
     RuneTrackerComponent,
     RuneCardComponent,
     ExportButtonComponent,
-    RunLogComponent
+    RunLogComponent,
+    NavbarComponent,
+    RunewordsComponent
   ],
   imports: [
     BrowserModule,
