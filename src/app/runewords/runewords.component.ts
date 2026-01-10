@@ -53,6 +53,10 @@ export class RunewordsComponent implements OnInit {
     return `assets/images/runes/${runeName.toLowerCase()}_rune.png`;
   }
 
+  isRuneSelected(runeName: string): boolean {
+    return this.selectedRunes.has(runeName);
+  }
+
   onSocketFilterChange(sockets: number): void {
     if (this.selectedSockets === sockets) {
       this.selectedSockets = null;

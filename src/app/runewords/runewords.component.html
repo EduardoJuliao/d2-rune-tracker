@@ -61,7 +61,9 @@
 
       <!-- Runes Section -->
       <div class="runes-list">
-        <span *ngFor="let rune of runeword.runes; let i = index" class="rune-item">
+        <span *ngFor="let rune of runeword.runes; let i = index"
+              class="rune-item"
+              [class.rune-selected]="isRuneSelected(rune)">
           <i *ngIf="i > 0" class="arrow">▶</i>
           <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-image">
           <span class="rune-name">{{ rune }}</span>
