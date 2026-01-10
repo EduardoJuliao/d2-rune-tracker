@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Rune, LogEntry } from '../models/rune.model';
 import { LocalStorageService } from '../services/local-storage.service';
+import runewordsData from '../../data/runewords-d2r.json';
+
+interface Runeword {
+  name: string;
+  runes: string[];
+  itemTypes: string[];
+  sockets: number;
+  level: number;
+  properties: string[];
+}
 
 @Component({
   selector: 'app-rune-tracker',
@@ -15,6 +25,7 @@ export class RuneTrackerComponent implements OnInit {
   storageEnabled: boolean = false;
 
   runeRows: Rune[][] = [];
+  allRunewords: Runeword[] = runewordsData;
 
   constructor(private localStorageService: LocalStorageService) { }
 
@@ -128,5 +139,24 @@ export class RuneTrackerComponent implements OnInit {
         this.logEntries
       );
     }
+  }
+
+  get craftableRunewords(): Runeword[] {
+    return this.allRunewords.filter(runeword => {
+      // Check if we have all required runes for this runeword
+      return runeword.runes.every(requiredRune => {
+        const rune = this.runes.find(r => r.name === requiredRune);
+        return rune && rune.count > 0;
+      });
+    });
+  }
+
+  getRuneImage(runeName: string): string {
+    return `assets/images/runes/${runeName.toLowerCase()}_rune.png`;
+  }
+
+  isRuneInInventory(runeName: string): boolean {
+    const rune = this.runes.find(r => r.name === runeName);
+    return rune ? rune.count > 0 : false;
   }
 }

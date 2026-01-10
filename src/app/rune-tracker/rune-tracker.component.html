@@ -40,4 +40,47 @@
     [runes]="runes"
     [runCount]="runNumber - 1">
   </app-run-log>
+
+  <!-- Craftable Runewords Section -->
+  <div class="craftable-runewords-section" *ngIf="craftableRunewords.length > 0">
+    <h2>Craftable Runewords ({{ craftableRunewords.length }})</h2>
+    <div class="runewords-grid">
+      <article *ngFor="let runeword of craftableRunewords" class="runeword-card">
+        <h3 class="runeword-title">{{ runeword.name }}</h3>
+
+        <h4 class="runeword-meta">
+          <span class="patch-label">Patch 2.6</span>
+          <span class="runeword-label">Runeword</span>
+        </h4>
+
+        <!-- Runes Section -->
+        <div class="runes-list">
+          <span *ngFor="let rune of runeword.runes; let i = index"
+                class="rune-item"
+                [class.rune-available]="isRuneInInventory(rune)">
+            <i *ngIf="i > 0" class="arrow">▶</i>
+            <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-image">
+            <span class="rune-name">{{ rune }}</span>
+          </span>
+        </div>
+
+        <div class="runeword-requirements">
+          <span class="level-req">Req level: {{ runeword.level }}</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="runeword-info">
+          <span class="sockets-info">{{ runeword.sockets }} socket</span>
+          <span class="item-types">{{ runeword.itemTypes.join(', ') }}</span>
+        </div>
+
+        <div class="runeword-properties">
+          <div *ngFor="let property of runeword.properties" class="property">
+            {{ property }}
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 </div>
