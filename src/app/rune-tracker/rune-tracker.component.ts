@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Rune, LogEntry } from '../models/rune.model';
 import { LocalStorageService } from '../services/local-storage.service';
 import runewordsData from '../../data/runewords-d2r.json';
@@ -15,7 +16,24 @@ interface Runeword {
 @Component({
   selector: 'app-rune-tracker',
   templateUrl: './rune-tracker.component.html',
-  styleUrls: ['./rune-tracker.component.css']
+  styleUrls: ['./rune-tracker.component.css'],
+  animations: [
+    trigger('slideDown', [
+      state('collapsed', style({
+        height: '0',
+        overflow: 'hidden',
+        opacity: '0'
+      })),
+      state('expanded', style({
+        height: '*',
+        overflow: 'visible',
+        opacity: '1'
+      })),
+      transition('collapsed <=> expanded', [
+        animate('300ms ease-in-out')
+      ])
+    ])
+  ]
 })
 export class RuneTrackerComponent implements OnInit {
   runNumber: number = 1;
@@ -26,6 +44,10 @@ export class RuneTrackerComponent implements OnInit {
 
   runeRows: Rune[][] = [];
   allRunewords: Runeword[] = runewordsData;
+
+  // Collapsible section states
+  craftableRunewordsExpanded: boolean = true;
+  runLogExpanded: boolean = false;
 
   constructor(private localStorageService: LocalStorageService) { }
 
@@ -158,5 +180,13 @@ export class RuneTrackerComponent implements OnInit {
   isRuneInInventory(runeName: string): boolean {
     const rune = this.runes.find(r => r.name === runeName);
     return rune ? rune.count > 0 : false;
+  }
+
+  toggleCraftableRunewords(): void {
+    this.craftableRunewordsExpanded = !this.craftableRunewordsExpanded;
+  }
+
+  toggleRunLog(): void {
+    this.runLogExpanded = !this.runLogExpanded;
   }
 }

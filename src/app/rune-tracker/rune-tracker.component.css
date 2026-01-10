@@ -108,6 +108,17 @@ h2 {
   margin-bottom: 30px;
 }
 
+.section-title {
+  text-align: center;
+  color: #d4af37;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .rune-row {
   display: flex;
   justify-content: center;
@@ -116,20 +127,87 @@ h2 {
   margin-bottom: 15px;
 }
 
-/* Craftable Runewords Section */
-.craftable-runewords-section {
-  margin-top: 40px;
-  padding: 20px;
+/* Collapsible Sections */
+.collapsible-section {
+  margin-top: 30px;
   background-color: rgba(0, 0, 0, 0.3);
   border: 2px solid #d4af37;
   border-radius: 8px;
+  overflow: visible;
+  position: relative;
 }
 
-.craftable-runewords-section h2 {
-  text-align: center;
+.section-header {
+  padding: 15px 20px;
+  background-color: rgba(212, 175, 55, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+  user-select: none;
+  position: relative;
+  z-index: 10;
+  border-radius: 6px 6px 0 0;
+}
+
+.section-header:hover {
+  background-color: rgba(212, 175, 55, 0.2);
+  border-bottom-color: #d4af37;
+}
+
+.section-header h2 {
+  margin: 0;
   color: #d4af37;
-  margin-bottom: 20px;
+  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 24px;
+}
+
+.section-header .info-icon {
+  position: relative;
+  z-index: 1001;
+}
+
+.section-header .info-icon .tooltip {
+  z-index: 1002;
+}
+
+.toggle-icon {
+  color: #d4af37;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.section-content {
+  padding: 20px;
+  overflow: hidden;
+  border-radius: 0 0 6px 6px;
+}
+
+.craftable-runewords-section .section-content {
+  padding: 20px;
+}
+
+.run-log-section .section-content {
+  padding: 0;
+}
+
+/* No Craftable Message */
+.no-craftable {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.no-craftable p {
+  margin: 0;
+  color: #d4af37;
 }
 
 /* Runewords Grid */

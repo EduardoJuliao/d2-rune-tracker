@@ -2,7 +2,13 @@
   <h1>D2 Rune Tracker</h1>
 
   <div class="run-number-section">
-    <label for="runNumber">Run Number:</label>
+    <label for="runNumber">
+      Run Number:
+      <i class="info-icon">
+        i
+        <span class="tooltip">Track your farming runs! Increment the run number each time you complete a run. When you change the run number, your current rune counts will be saved to the log below.</span>
+      </i>
+    </label>
     <input
       type="number"
       id="runNumber"
@@ -25,6 +31,13 @@
   </div>
 
   <div class="runes-section">
+    <h2 class="section-title">
+      Rune Counter
+      <i class="info-icon">
+        i
+        <span class="tooltip">Click the + button to add runes you found. Click - to remove. Your counts will be saved to the log when you move to the next run.</span>
+      </i>
+    </h2>
     <div class="rune-row" *ngFor="let row of runeRows">
       <app-rune-card
         *ngFor="let rune of row"
@@ -35,52 +48,81 @@
     </div>
   </div>
 
-  <app-run-log
-    [logEntries]="logEntries"
-    [runes]="runes"
-    [runCount]="runNumber - 1">
-  </app-run-log>
-
   <!-- Craftable Runewords Section -->
-  <div class="craftable-runewords-section" *ngIf="craftableRunewords.length > 0">
-    <h2>Craftable Runewords ({{ craftableRunewords.length }})</h2>
-    <div class="runewords-grid">
-      <article *ngFor="let runeword of craftableRunewords" class="runeword-card">
-        <h3 class="runeword-title">{{ runeword.name }}</h3>
+  <div class="collapsible-section craftable-runewords-section">
+    <div class="section-header" (click)="toggleCraftableRunewords()">
+      <h2>
+        <span class="toggle-icon">{{ craftableRunewordsExpanded ? '▼' : '▶' }}</span>
+        Craftable Runewords ({{ craftableRunewords.length }})
+        <i class="info-icon" (click)="$event.stopPropagation()">
+          i
+          <span class="tooltip">These are runewords you can craft with the runes currently in your inventory! Runes you have are highlighted in green.</span>
+        </i>
+      </h2>
+    </div>
+    <div class="section-content" [@slideDown]="craftableRunewordsExpanded ? 'expanded' : 'collapsed'">
+      <div *ngIf="craftableRunewords.length === 0" class="no-craftable">
+        <p>No craftable runewords yet. Start collecting runes to see what you can make!</p>
+      </div>
+      <div class="runewords-grid" *ngIf="craftableRunewords.length > 0">
+        <article *ngFor="let runeword of craftableRunewords" class="runeword-card">
+          <h3 class="runeword-title">{{ runeword.name }}</h3>
 
-        <h4 class="runeword-meta">
-          <span class="patch-label">Patch 2.6</span>
-          <span class="runeword-label">Runeword</span>
-        </h4>
+          <h4 class="runeword-meta">
+            <span class="patch-label">Patch 2.6</span>
+            <span class="runeword-label">Runeword</span>
+          </h4>
 
-        <!-- Runes Section -->
-        <div class="runes-list">
-          <span *ngFor="let rune of runeword.runes; let i = index"
-                class="rune-item"
-                [class.rune-available]="isRuneInInventory(rune)">
-            <i *ngIf="i > 0" class="arrow">▶</i>
-            <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-image">
-            <span class="rune-name">{{ rune }}</span>
-          </span>
-        </div>
-
-        <div class="runeword-requirements">
-          <span class="level-req">Req level: {{ runeword.level }}</span>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="runeword-info">
-          <span class="sockets-info">{{ runeword.sockets }} socket</span>
-          <span class="item-types">{{ runeword.itemTypes.join(', ') }}</span>
-        </div>
-
-        <div class="runeword-properties">
-          <div *ngFor="let property of runeword.properties" class="property">
-            {{ property }}
+          <!-- Runes Section -->
+          <div class="runes-list">
+            <span *ngFor="let rune of runeword.runes; let i = index"
+                  class="rune-item"
+                  [class.rune-available]="isRuneInInventory(rune)">
+              <i *ngIf="i > 0" class="arrow">▶</i>
+              <img [src]="getRuneImage(rune)" [alt]="rune" class="rune-image">
+              <span class="rune-name">{{ rune }}</span>
+            </span>
           </div>
-        </div>
-      </article>
+
+          <div class="runeword-requirements">
+            <span class="level-req">Req level: {{ runeword.level }}</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="runeword-info">
+            <span class="sockets-info">{{ runeword.sockets }} socket</span>
+            <span class="item-types">{{ runeword.itemTypes.join(', ') }}</span>
+          </div>
+
+          <div class="runeword-properties">
+            <div *ngFor="let property of runeword.properties" class="property">
+              {{ property }}
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- Run Log Section -->
+  <div class="collapsible-section run-log-section">
+    <div class="section-header" (click)="toggleRunLog()">
+      <h2>
+        <span class="toggle-icon">{{ runLogExpanded ? '▼' : '▶' }}</span>
+        Run Log
+        <i class="info-icon" (click)="$event.stopPropagation()">
+          i
+          <span class="tooltip">History of all runes you've found across your runs. Export your data using the button inside!</span>
+        </i>
+      </h2>
+    </div>
+    <div class="section-content" [@slideDown]="runLogExpanded ? 'expanded' : 'collapsed'">
+      <app-run-log
+        [logEntries]="logEntries"
+        [runes]="runes"
+        [runCount]="runNumber - 1">
+      </app-run-log>
     </div>
   </div>
 </div>
