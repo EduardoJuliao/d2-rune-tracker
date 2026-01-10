@@ -20,9 +20,15 @@ export class RunewordsComponent implements OnInit {
   filteredRunewords: Runeword[] = [];
 
   // Filter states
+  searchText: string = '';
   selectedSockets: number | null = null;
   selectedRunes: Set<string> = new Set();
   selectedItemTypes: Set<string> = new Set();
+
+  // Collapsible sections
+  socketsCollapsed: boolean = false;
+  runesCollapsed: boolean = false;
+  itemTypesCollapsed: boolean = false;
 
   // Available options
   socketOptions: number[] = [2, 3, 4, 5, 6];
@@ -84,8 +90,35 @@ export class RunewordsComponent implements OnInit {
     this.applyFilters();
   }
 
+  onSearchChange(searchValue: string): void {
+    this.searchText = searchValue;
+    this.applyFilters();
+  }
+
+  toggleSockets(): void {
+    this.socketsCollapsed = !this.socketsCollapsed;
+  }
+
+  toggleRunes(): void {
+    this.runesCollapsed = !this.runesCollapsed;
+  }
+
+  toggleItemTypes(): void {
+    this.itemTypesCollapsed = !this.itemTypesCollapsed;
+  }
+
   applyFilters(): void {
     this.filteredRunewords = this.allRunewords.filter(rw => {
+      // Text search filter - only search in runeword name
+      if (this.searchText.trim() !== '') {
+        const searchLower = this.searchText.toLowerCase();
+        const nameLower = rw.name.toLowerCase();
+
+        if (!nameLower.includes(searchLower)) {
+          return false;
+        }
+      }
+
       // Socket filter
       if (this.selectedSockets !== null && rw.sockets !== this.selectedSockets) {
         return false;
@@ -115,6 +148,7 @@ export class RunewordsComponent implements OnInit {
   }
 
   clearFilters(): void {
+    this.searchText = '';
     this.selectedSockets = null;
     this.selectedRunes.clear();
     this.selectedItemTypes.clear();

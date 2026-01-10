@@ -5,13 +5,32 @@
   <div class="filters-section">
     <div class="filter-group">
       <h3>
+        Search
+        <i class="info-icon">
+          i
+          <span class="tooltip">Search runewords by name.</span>
+        </i>
+      </h3>
+      <div class="search-container">
+        <input
+          type="text"
+          [(ngModel)]="searchText"
+          (input)="onSearchChange(searchText)"
+          placeholder="Search by runeword name..."
+          class="search-input">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <h3 (click)="toggleSockets()" class="collapsible-header">
+        <span class="toggle-icon">{{ socketsCollapsed ? '▶' : '▼' }}</span>
         Sockets
         <i class="info-icon">
           i
           <span class="tooltip">Filter runewords by the number of sockets required.</span>
         </i>
       </h3>
-      <div class="socket-filters">
+      <div class="socket-filters" [class.collapsed]="socketsCollapsed">
         <button
           *ngFor="let socket of socketOptions"
           (click)="onSocketFilterChange(socket)"
@@ -23,14 +42,15 @@
     </div>
 
     <div class="filter-group">
-      <h3>
+      <h3 (click)="toggleRunes()" class="collapsible-header">
+        <span class="toggle-icon">{{ runesCollapsed ? '▶' : '▼' }}</span>
         Runes
         <i class="info-icon">
           i
           <span class="tooltip">Select runes you have. Only runewords containing ALL selected runes will be shown. Selected runes are highlighted in the cards below.</span>
         </i>
       </h3>
-      <div class="rune-filters">
+      <div class="rune-filters" [class.collapsed]="runesCollapsed">
         <label *ngFor="let rune of availableRunes" class="rune-checkbox">
           <input
             type="checkbox"
@@ -43,14 +63,15 @@
     </div>
 
     <div class="filter-group">
-      <h3>
+      <h3 (click)="toggleItemTypes()" class="collapsible-header">
+        <span class="toggle-icon">{{ itemTypesCollapsed ? '▶' : '▼' }}</span>
         Item Types
         <i class="info-icon">
           i
           <span class="tooltip">Filter by equipment type. Runewords matching ANY selected type will be shown.</span>
         </i>
       </h3>
-      <div class="itemtype-filters">
+      <div class="itemtype-filters" [class.collapsed]="itemTypesCollapsed">
         <label *ngFor="let itemType of availableItemTypes" class="itemtype-checkbox">
           <input
             type="checkbox"
