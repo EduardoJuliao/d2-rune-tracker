@@ -14,12 +14,15 @@ interface SerializedLogEntry {
   timestamp: string;
 }
 
+export type GameVersion = 'D2R' | 'PD2';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
   private readonly STORAGE_KEY_STATE = 'd2-rune-tracker.state';
   private readonly STORAGE_KEY_ENABLED = 'd2-rune-tracker.enabled';
+  private readonly STORAGE_KEY_GAME_VERSION = 'd2-rune-tracker.game-version';
 
   constructor() { }
 
@@ -136,6 +139,35 @@ export class LocalStorageService {
     } catch (error) {
       console.warn('Failed to load storage enabled preference:', error);
       return false;
+    }
+  }
+
+  setGameVersion(version: GameVersion): void {
+    if (!this.isLocalStorageAvailable()) {
+      return;
+    }
+
+    try {
+      localStorage.setItem(this.STORAGE_KEY_GAME_VERSION, version);
+    } catch (error) {
+      console.warn('Failed to save game version preference:', error);
+    }
+  }
+
+  getGameVersion(): GameVersion {
+    if (!this.isLocalStorageAvailable()) {
+      return 'D2R';
+    }
+
+    try {
+      const stored = localStorage.getItem(this.STORAGE_KEY_GAME_VERSION);
+      if (!stored || (stored !== 'D2R' && stored !== 'PD2')) {
+        return 'D2R';
+      }
+      return stored as GameVersion;
+    } catch (error) {
+      console.warn('Failed to load game version preference:', error);
+      return 'D2R';
     }
   }
 

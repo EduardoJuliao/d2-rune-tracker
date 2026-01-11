@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import runewordsData from '../../data/runewords-d2r.json';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import runewordsD2R from '../../data/runewords-d2r.json';
+import runewordsPD2 from '../../data/runewords-pd2.json';
+import { LocalStorageService, GameVersion } from '../services/local-storage.service';
 
 interface Runeword {
   name: string;
@@ -15,9 +17,11 @@ interface Runeword {
   templateUrl: './runewords.component.html',
   styleUrls: ['./runewords.component.css']
 })
-export class RunewordsComponent implements OnInit {
-  allRunewords: Runeword[] = runewordsData;
+export class RunewordsComponent implements OnInit, OnDestroy {
+  allRunewords: Runeword[] = [];
   filteredRunewords: Runeword[] = [];
+  currentGameVersion: GameVersion = 'D2R';
+  private gameVersionListener: ((event: Event) => void) | null = null;
 
   // Filter states
   searchText: string = '';
@@ -40,9 +44,44 @@ export class RunewordsComponent implements OnInit {
   ];
   availableItemTypes: string[] = [];
 
-  constructor() { }
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
+    // Load the current game version
+    this.currentGameVersion = this.localStorageService.getGameVersion();
+    this.loadRunewordsForVersion(this.currentGameVersion);
+
+    // Listen for game version changes
+    this.gameVersionListener = ((event: CustomEvent) => {
+      const newVersion = event.detail.version as GameVersion;
+      this.currentGameVersion = newVersion;
+      this.loadRunewordsForVersion(newVersion);
+    }) as EventListener;
+
+    window.addEventListener('gameVersionChanged', this.gameVersionListener as EventListener);
+
+    this.extractUniqueItemTypes();
+    this.applyFilters();
+  }
+
+  ngOnDestroy(): void {
+    if (this.gameVersionListener) {
+      window.removeEventListener('gameVersionChanged', this.gameVersionListener as EventListener);
+    }
+  }
+
+  loadRunewordsForVersion(version: GameVersion): void {
+    // Clear existing filters when switching versions
+    this.clearFilters();
+
+    // Load the appropriate runewords data
+    if (version === 'PD2') {
+      this.allRunewords = runewordsPD2 as Runeword[];
+    } else {
+      this.allRunewords = runewordsD2R as Runeword[];
+    }
+
+    // Re-extract item types and apply filters
     this.extractUniqueItemTypes();
     this.applyFilters();
   }

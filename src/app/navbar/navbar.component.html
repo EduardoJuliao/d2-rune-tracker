@@ -1,6 +1,17 @@
 <nav class="navbar">
-  <div class="nav-items">
-    <a routerLink="/rune-tracker" routerLinkActive="active">Rune tracker</a>
-    <a routerLink="/runewords" routerLinkActive="active">Runewords</a>
+  <div class="navbar-content">
+    <div class="game-version-selector">
+      <label for="game-version">Game Version:</label>
+      <select id="game-version" [(ngModel)]="currentGameVersion" (change)="onGameVersionChange($event)">
+        <option value="D2R">D2:R</option>
+        <option value="PD2">Project Diablo 2</option>
+      </select>
+      <img *ngIf="currentGameVersion === 'D2R'" [src]="getD2RLogo()" alt="D2R Logo" class="game-logo">
+      <img *ngIf="currentGameVersion === 'PD2'" [src]="getPD2Logo()" alt="PD2 Logo" class="game-logo">
+    </div>
+    <div class="nav-items">
+      <a routerLink="/rune-tracker" routerLinkActive="active">Rune tracker</a>
+      <a routerLink="/runewords" routerLinkActive="active">Runewords</a>
+    </div>
   </div>
 </nav>
